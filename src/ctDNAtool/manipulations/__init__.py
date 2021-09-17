@@ -5,6 +5,8 @@ from .region_sum import region_sum
 from .summaries import summaries
 from .summaries_data import summaries_data
 from .convert_to_tsv import convert_to_tsv_length
+from .convert_to_tsv import convert_to_tsv_length_seq_sum
+from .convert_to_tsv import convert_to_tsv_length_seq_sum_wide
 from .combine_data import combine_data
 from ..data import Data
 from ..combined_data import CombinedData

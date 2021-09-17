@@ -4,7 +4,7 @@ import logging
 
 from .bed import load_bed_file
 from .bam import BAM
-from .utils import seq_to_index, fetch_seq
+from .utils import seq_to_index, fetch_seqs, reverse_complement
 from ..data import Data
 from ..py2bit_context import Py2bitContext
 
@@ -16,9 +16,8 @@ def length_end_seqs(
 ):
     """Create a tensor where the first dim. represents a region from the bed file,
     the second dim. represent read lengths from 1 to max_length and the third dim.
-    represents the the concatenation of the sequences at the fragment ends, taken
-    from the reference genome, endcoded as an index. Then length of an end sequence
-    is 2 times the flank parameter.
+    represents the sequences at the fragment ends, taken from the reference genome, 
+    endcoded as an index. Then length of an end sequence is 2 times the flank parameter.
 
     :param bam_file: File path to the bam sample file
     :type bam_file: str
@@ -40,7 +39,7 @@ def length_end_seqs(
     bam = BAM(bam_file)
     id_lst = list()
     tensor = np.empty((len(region_lst),), dtype=np.object)
-    N_seqs = 4 ** (4 * flank) + 1  # the last bin is for sequences containing N
+    N_seqs = 4 ** (2 * flank)
 
     with Py2bitContext(ref_genome_file) as tb:
         chroms_lengths = tb.chroms()
@@ -55,8 +54,12 @@ def length_end_seqs(
                     and chroms_lengths[region.chrom] >= (read.end + flank)
                     and 0 <= (read.start - flank)
                 ):
-                    seq = fetch_seq(tb, region.chrom, read.start, read.end, flank)
-                    matrix[length - 1, seq_to_index(seq)] += 1
+                    start_seq, end_seq = fetch_seqs(tb, region.chrom, read.start, read.end, flank)
+                    if not 'N' in start_seq:
+                        matrix[length - 1, seq_to_index(start_seq)] += 1
+                    if not 'N' in end_seq:
+                        end_seq = reverse_complement(end_seq)
+                        matrix[length - 1, seq_to_index(end_seq)] += 1
             tensor[i] = csr_matrix(matrix)
             id_lst.append(region.region_id)
         logger.info(str(bam))

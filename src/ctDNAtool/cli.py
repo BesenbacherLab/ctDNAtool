@@ -168,6 +168,20 @@ def convert_to_tsv_length(input_file, output_file, min_length, max_length):
 
 
 @cli.command()
+@click.argument("input_file")
+@click.option("-o", "--output-file", default="tsv_length_seq.csv")
+def convert_to_tsv_length_seq_sum(input_file, output_file):
+    """Converts a .pickle file containing length seq data to a .tsv file"""
+    manipulations.convert_to_tsv_length_seq_sum(input_file, output_file)
+
+@cli.command()
+@click.argument("input_file")
+@click.option("-o", "--output-file", default="tsv_length_seq.csv")
+def convert_to_tsv_length_seq_sum_wide(input_file, output_file):
+    """Converts a .pickle file containing length seq data to a .tsv file"""
+    manipulations.convert_to_tsv_length_seq_sum_wide(input_file, output_file)
+
+@cli.command()
 @click.option("-o", "--output-file", default="combined_data.pickle")
 @cli_common.file_of_files
 @click.argument("input_files", nargs=-1)
