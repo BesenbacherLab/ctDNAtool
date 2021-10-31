@@ -73,8 +73,9 @@ def generate_length(bam_file, bed_file, output_file, max_length, map_quality):
 @cli_common.max_length
 @cli_common.flank
 @cli_common.map_quality
+@cli_common.end_type
 def generate_length_end_seq(
-    bam_file, bed_file, reference_genome, output_file, max_length, flank, map_quality
+    bam_file, bed_file, reference_genome, output_file, max_length, flank, map_quality, end_type
 ):
     """Creates a tensor with length and end sequence data"""
     generators.length_end_seqs(
@@ -85,6 +86,7 @@ def generate_length_end_seq(
         max_length,
         flank,
         map_quality,
+        end_type,
     )
 
 

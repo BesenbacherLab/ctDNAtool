@@ -12,7 +12,7 @@ logger = logging.getLogger()
 
 
 def length_end_seqs(
-    bam_file, bed_file, ref_genome_file, output_file, max_length=500, flank=1, mapq=20
+    bam_file, bed_file, ref_genome_file, output_file, max_length=500, flank=1, mapq=20, end_type='both'
 ):
     """Create a tensor where the first dim. represents a region from the bed file,
     the second dim. represent read lengths from 1 to max_length and the third dim.
@@ -56,10 +56,12 @@ def length_end_seqs(
                 ):
                     start_seq, end_seq = fetch_seqs(tb, region.chrom, read.start, read.end, flank)
                     if not 'N' in start_seq:
-                        matrix[length - 1, seq_to_index(start_seq)] += 1
+                        if end_type in ['start', 'both']:
+                            matrix[length - 1, seq_to_index(start_seq)] += 1
                     if not 'N' in end_seq:
-                        end_seq = reverse_complement(end_seq)
-                        matrix[length - 1, seq_to_index(end_seq)] += 1
+                        if end_type in ['end', 'both']:
+                            end_seq = reverse_complement(end_seq)
+                            matrix[length - 1, seq_to_index(end_seq)] += 1
             tensor[i] = csr_matrix(matrix)
             id_lst.append(region.region_id)
         logger.info(str(bam))

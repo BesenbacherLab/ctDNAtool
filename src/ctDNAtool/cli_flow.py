@@ -267,6 +267,7 @@ def length_data_bed_bin(
 @cli_common.include_x
 @cli_common.max_length
 @cli_common.map_quality
+@cli_common.end_type
 @click.option("-f", "--flank", default=1, type=click.IntRange(min=1))
 @click.pass_context
 def length_seq_data(
@@ -278,6 +279,7 @@ def length_seq_data(
     max_length,
     flank,
     map_quality,
+    end_type,
 ):
     """This command outputs the end sequence and length data of a sample to a .pickle file, given a genome reference file.
     Chromosome regions is collapsed.
@@ -305,6 +307,7 @@ def length_seq_data(
         max_length=max_length,
         flank=flank,
         map_quality=map_quality,
+        end_type=end_type,
     )
 
     ctx.invoke(region_sum, sample_file=temp_pickle_file, output_file=output_file)
