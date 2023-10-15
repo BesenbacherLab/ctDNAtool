@@ -112,7 +112,7 @@ def convert_to_tsv_length(pickle_file, output_file, min_length=None, max_length=
         logger.debug(f"Writing data to {output_file}")
 
         lengths = generate_lengths(min_length, max_length)
-        writer.writerow(["Region ID"] + lengths)
+        writer.writerow(["Region_ID"] + lengths)
 
         for region_id, row in zip(data.region_ids, data.data):
             row_from_range = _get_row_from_range(row, min_length, max_length)
@@ -123,4 +123,5 @@ def _get_row_from_range(row, min_length, max_length):
     return list(map(str, row[min_length - 1 : max_length]))
 
 def generate_lengths(min_length, max_length):
-    return list(map(str, range(min_length, max_length)))
+    return [f'length_{i}'for i in range(min_length, max_length+1)]
+
