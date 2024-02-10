@@ -45,7 +45,7 @@ def length_end_seqs(
     region_lst = load_bed_file(bed_file)
     bam = BAM(bam_file)
     id_lst = list()
-    tensor = np.empty((len(region_lst),), dtype=np.object)
+    tensor = np.empty((len(region_lst),), dtype=object)
     N_seqs = 4 ** (2 * flank)
 
     with Py2bitContext(ref_genome_file) as tb:
