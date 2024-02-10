@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "ctdnatool"
+name = "ctDNAtool"
 version = "0.1.0"
 description = "A software tool for extracting features from cfDNA NGS data."
 authors = ["Søren Besenbacher <besenbacher@clin.au.dk>", "Per Høgfeldt"]
 readme = "README.md"
+packages = [ { include = "ctDNAtool", from = "src" } ]
 
 [tool.poetry.dependencies]
 python = "^3.9"
