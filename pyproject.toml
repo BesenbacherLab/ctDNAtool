@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "ctdnatool"
+version = "0.1.0"
+description = "A software tool for extracting features from cfDNA NGS data."
+authors = ["Søren Besenbacher <besenbacher@clin.au.dk>", "Per Høgfeldt"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.26.4"
+py2bit = "^0.3.0"
+pysam = "^0.22.0"
+scipy = "^1.12.0"
+natsort = "^8.4.0"
+click = "^8.1.7"
+attrs = "^23.2.0"
+
+[tool.poetry.scripts]
+ctDNAtool = "ctDNAtool.cli:cli"
+ctDNAflow = "ctDNAtool.cli_flow:cli_flow"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.0.0"
+flake8-print = "^5.0.0"
+black = "^24.1.1"
+pytest = "^8.0.0"
+nox = "^2023.4.22"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

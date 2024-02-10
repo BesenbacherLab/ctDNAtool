@@ -81,12 +81,13 @@ def flank(function):
 
     return function
 
+
 def end_type(function):
     function = click.option(
         "--end_type",
-        default='both',
-        type=click.Choice(['start', 'end', 'both']),
-        help='Type of ends to look at. When ends are included the reverse complement of their k-mer will be counted.',
+        default="both",
+        type=click.Choice(["start", "end", "both"]),
+        help="Type of ends to look at. When ends are included the reverse complement of their k-mer will be counted.",
     )(function)
 
     return function

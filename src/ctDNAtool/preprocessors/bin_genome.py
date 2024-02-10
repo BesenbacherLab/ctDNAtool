@@ -78,7 +78,7 @@ def bin_genome_Mbp(
     :type Chromosomes:
     """
     tb = py2bit.open(genome_ref_file)
-    bin_size = int(mbp * 10 ** 6)
+    bin_size = int(mbp * 10**6)
     try:
         chroms = tb.chroms()
         beds = list()

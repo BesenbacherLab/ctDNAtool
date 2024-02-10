@@ -75,7 +75,14 @@ def generate_length(bam_file, bed_file, output_file, max_length, map_quality):
 @cli_common.map_quality
 @cli_common.end_type
 def generate_length_end_seq(
-    bam_file, bed_file, reference_genome, output_file, max_length, flank, map_quality, end_type
+    bam_file,
+    bed_file,
+    reference_genome,
+    output_file,
+    max_length,
+    flank,
+    map_quality,
+    end_type,
 ):
     """Creates a tensor with length and end sequence data"""
     generators.length_end_seqs(
@@ -176,12 +183,14 @@ def convert_to_tsv_length_seq_sum(input_file, output_file):
     """Converts a .pickle file containing length seq data to a .tsv file"""
     manipulations.convert_to_tsv_length_seq_sum(input_file, output_file)
 
+
 @cli.command()
 @click.argument("input_file")
 @click.option("-o", "--output-file", default="tsv_length_seq.csv")
 def convert_to_tsv_length_seq_sum_wide(input_file, output_file):
     """Converts a .pickle file containing length seq data to a .tsv file"""
     manipulations.convert_to_tsv_length_seq_sum_wide(input_file, output_file)
+
 
 @cli.command()
 @click.option("-o", "--output-file", default="combined_data.pickle")

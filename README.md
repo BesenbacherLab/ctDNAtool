@@ -6,9 +6,10 @@
 ## setup
 To install dependencies and install ctDNAtool, it's recommended to first create a new clean Conda environment, and then run:
 ```
-$ make init
+$ poetry build
+$ pip install dist/ctdnatool-0.1.0-py3-none-any.whl
 ```
-This will install the dependencies as well as ctDNAtool. ctDNAtool will be installed in edit mode.
+This will install the dependencies as well as ctDNAtool.
 
 The software has two entrypoints: `ctDNAtool`, which contains the core functionality, and `ctDNAflow` which defines a set of workflows, with what we consider the most common use cases of the tool. 
 To see which commands are available and how to use them, use the `--help` flag as shown below:

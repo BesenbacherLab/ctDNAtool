@@ -12,11 +12,18 @@ logger = logging.getLogger()
 
 
 def length_end_seqs(
-    bam_file, bed_file, ref_genome_file, output_file, max_length=500, flank=1, mapq=20, end_type='both'
+    bam_file,
+    bed_file,
+    ref_genome_file,
+    output_file,
+    max_length=500,
+    flank=1,
+    mapq=20,
+    end_type="both",
 ):
     """Create a tensor where the first dim. represents a region from the bed file,
     the second dim. represent read lengths from 1 to max_length and the third dim.
-    represents the sequences at the fragment ends, taken from the reference genome, 
+    represents the sequences at the fragment ends, taken from the reference genome,
     endcoded as an index. Then length of an end sequence is 2 times the flank parameter.
 
     :param bam_file: File path to the bam sample file
@@ -54,12 +61,14 @@ def length_end_seqs(
                     and chroms_lengths[region.chrom] >= (read.end + flank)
                     and 0 <= (read.start - flank)
                 ):
-                    start_seq, end_seq = fetch_seqs(tb, region.chrom, read.start, read.end, flank)
-                    if not 'N' in start_seq:
-                        if end_type in ['start', 'both']:
+                    start_seq, end_seq = fetch_seqs(
+                        tb, region.chrom, read.start, read.end, flank
+                    )
+                    if "N" not in start_seq:
+                        if end_type in ["start", "both"]:
                             matrix[length - 1, seq_to_index(start_seq)] += 1
-                    if not 'N' in end_seq:
-                        if end_type in ['end', 'both']:
+                    if "N" not in end_seq:
+                        if end_type in ["end", "both"]:
                             end_seq = reverse_complement(end_seq)
                             matrix[length - 1, seq_to_index(end_seq)] += 1
             tensor[i] = csr_matrix(matrix)

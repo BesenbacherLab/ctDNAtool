@@ -45,7 +45,7 @@ def write_bed_file(file_path, beds):
         output_lines.append(str(bed))
     output_string = "\n".join(output_lines)
     if file_path is None:
-        print(output_string)  # noqa: T001
+        print(output_string)  # noqa: T201
     else:
         with open(file_path, "w") as fp:
-            print(output_string, file=fp)  # noqa: T001
+            print(output_string, file=fp)  # noqa: T201

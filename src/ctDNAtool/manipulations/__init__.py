@@ -20,6 +20,8 @@ __all__ = [
     "summaries",
     "summaries_data",
     "convert_to_tsv_length",
+    "convert_to_tsv_length_seq_sum",
+    "convert_to_tsv_length_seq_sum_wide",
     "combine_data",
     "Data",
     "CombinedData",

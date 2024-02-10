@@ -4,15 +4,17 @@ from ..utils import tsv_writer
 import math
 
 logger = logging.getLogger()
-
 digit_to_nucleotide = "ATGC"
+
+
 def index_to_seq(num, seq_len=8):
-    pat = ['']
-    for i in range(seq_len-1,-1,-1):
+    pat = [""]
+    for i in range(seq_len - 1, -1, -1):
         k = num % 4
         num = num // 4
         pat = [digit_to_nucleotide[k]] + pat
-    return ''.join(pat)
+    return "".join(pat)
+
 
 def convert_to_tsv_length_seq_sum_wide(pickle_file, output_file):
     """This function takes a pickle file containing containing length data and writes the contents to a tsv file.
@@ -31,18 +33,18 @@ def convert_to_tsv_length_seq_sum_wide(pickle_file, output_file):
     """
     data = Data.read(pickle_file)
     nrow, ncol = data.data.shape
-    seq_len = int(math.log2(ncol))//2
+    seq_len = int(math.log2(ncol)) // 2
 
     with open(output_file, "w") as fp:
         writer = tsv_writer(fp)
         logger.debug(f"Writing data to {output_file}")
 
-        lengths = [str(i+1) for i in range(nrow)]
+        lengths = [str(i + 1) for i in range(nrow)]
         seqs = [index_to_seq(i, seq_len=seq_len) for i in range(ncol)]
 
         writer.writerow(["Sequence"] + lengths)
         for i, seq in enumerate(seqs):
-            row = [str(data.data[j,i]) for j in range(nrow)]
+            row = [str(data.data[j, i]) for j in range(nrow)]
             writer.writerow([seq] + row)
 
 
@@ -63,19 +65,19 @@ def convert_to_tsv_length_seq_sum(pickle_file, output_file):
     """
     data = Data.read(pickle_file)
     nrow, ncol = data.data.shape
-    seq_len = int(math.log2(ncol))//2
+    seq_len = int(math.log2(ncol)) // 2
 
     with open(output_file, "w") as fp:
         writer = tsv_writer(fp)
         logger.debug(f"Writing data to {output_file}")
 
-        lengths = [str(i+1) for i in range(nrow)]
+        lengths = [str(i + 1) for i in range(nrow)]
         seqs = [index_to_seq(i, seq_len=seq_len) for i in range(ncol)]
 
         writer.writerow(["Sequence", "Length", "Count"])
-        for i,length in enumerate(lengths):
+        for i, length in enumerate(lengths):
             for j, seq in enumerate(seqs):
-                count = str(data.data[i,j])
+                count = str(data.data[i, j])
                 writer.writerow([length, seq, count])
 
 
@@ -122,6 +124,6 @@ def convert_to_tsv_length(pickle_file, output_file, min_length=None, max_length=
 def _get_row_from_range(row, min_length, max_length):
     return list(map(str, row[min_length - 1 : max_length]))
 
-def generate_lengths(min_length, max_length):
-    return [f'length_{i}'for i in range(min_length, max_length+1)]
 
+def generate_lengths(min_length, max_length):
+    return [f"length_{i}" for i in range(min_length, max_length + 1)]
