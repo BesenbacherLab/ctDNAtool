@@ -17,7 +17,8 @@ def index_to_seq(num, seq_len=8):
 
 
 def convert_to_tsv_length_seq_sum_wide(pickle_file, output_file):
-    """This function takes a pickle file containing containing length data and writes the contents to a tsv file.
+    """This function takes a pickle file containing containing length and sequence data and writes the 
+    contents to a tsv file (sequence x length matrix of counts).
 
     param: pickle_file: Pickle file to convert.
     type: str
@@ -49,7 +50,8 @@ def convert_to_tsv_length_seq_sum_wide(pickle_file, output_file):
 
 
 def convert_to_tsv_length_seq_sum(pickle_file, output_file):
-    """This function takes a pickle file containing containing length data and writes the contents to a tsv file.
+    """This function takes a pickle file containing containing length and sequence data and writes 
+    the contents to a tsv file with columns: Sequence, Length and Count
 
     param: pickle_file: Pickle file to convert.
     type: str
@@ -74,7 +76,7 @@ def convert_to_tsv_length_seq_sum(pickle_file, output_file):
         lengths = [str(i + 1) for i in range(nrow)]
         seqs = [index_to_seq(i, seq_len=seq_len) for i in range(ncol)]
 
-        writer.writerow(["Sequence", "Length", "Count"])
+        writer.writerow(["Length", "Sequence", "Count"])
         for i, length in enumerate(lengths):
             for j, seq in enumerate(seqs):
                 count = str(data.data[i, j])
@@ -82,7 +84,7 @@ def convert_to_tsv_length_seq_sum(pickle_file, output_file):
 
 
 def convert_to_tsv_length(pickle_file, output_file, min_length=None, max_length=None):
-    """This function takes a pickle file containing containing length data and writes the contents to a tsv file.
+    """This function takes a pickle file containing containing region and length data and writes the contents to a tsv file.
 
     param: pickle_file: Pickle file to convert.
     type: str
